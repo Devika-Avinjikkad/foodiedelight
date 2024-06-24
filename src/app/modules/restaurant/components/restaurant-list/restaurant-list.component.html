@@ -1,0 +1,69 @@
+<div class="card">
+    <button pButton type="button" label="Add New" (click)="showDialog(true)" class="add-button"><mat-icon>add</mat-icon></button>
+    <p-table *ngIf="restaurant && restaurant.length > 0"
+        [value]="restaurant"
+        [paginator]="true"
+        [rows]="5"
+        [rowsPerPageOptions]="[5, 10, 20]"
+        responsiveLayout="stack" 
+        [breakpoint]="'200px'" 
+        [tableStyle]="{'min-width': '50rem'}"
+    >
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Sl.no</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Location</th>
+                <th>Cuisine</th>
+                <th>Rating</th>
+                <th>Actions</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-restaurant>
+            <tr>
+                <td>{{ restaurant.id }}</td>
+                <td>{{ restaurant.name }}</td>
+                <td>{{ restaurant.description }}</td>
+                <td>{{ restaurant.location }}</td>
+                <td>{{ restaurant.cuisine }}</td>
+                <td>{{ restaurant.rating }}</td>
+                <td>
+                    <button mat-icon-button (click)="editRestaurant(restaurant)"><mat-icon>edit</mat-icon></button>
+                    <button mat-icon-button (click)="confirmDelete(restaurant)"><mat-icon>delete</mat-icon></button>
+                  </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+
+<p-dialog header="{{popupLabel}}" [(visible)]="displayDialog" [modal]="true" [closable]="false" [responsive]="true" [style]="{width: '300px'}">
+    <div class="p-grid p-fluid">
+      <div class="p-field p-col-12">
+        <label for="name">Name</label>
+        <input id="name" type="text" pInputText [(ngModel)]="newRestaurant.name" required>
+      </div>
+      <div class="p-field p-col-12">
+        <label for="description">Description</label>
+        <input id="description" type="text" pInputText [(ngModel)]="newRestaurant.description" required>
+      </div>
+      <div class="p-field p-col-12">
+        <label for="location">Location</label>
+        <input id="location" type="text" pInputText [(ngModel)]="newRestaurant.location" required>
+      </div>
+      <div class="p-field p-col-12">
+        <label for="cuisine">Cuisine</label>
+        <input id="cuisine" type="text" pInputText [(ngModel)]="newRestaurant.cuisine" required>
+      </div>
+      <div class="p-field p-col-12">
+        <label for="rating">Rating</label>
+        <input id="rating" type="number" pInputText [(ngModel)]="newRestaurant.rating" required>
+      </div>
+    </div>
+    <p-footer>
+      <button pButton type="button" label="Save" icon="pi pi-check" (click)="saveRestaurant()"></button>
+      <button pButton type="button" label="Cancel" icon="pi pi-times" (click)="hideDialog()"></button>
+    </p-footer>
+  </p-dialog>
+
+  <p-confirmDialog></p-confirmDialog>
